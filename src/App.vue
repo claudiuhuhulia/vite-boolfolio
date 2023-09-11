@@ -2,8 +2,10 @@
 import axios from 'axios'
 const endpoint = 'http://127.0.0.1:8000/api/projects/'
 import AppHeader from './components/AppHeader.vue'
+import ProjectList from './components/projects/ProjectList.vue'
+
 export default {
-  components: { AppHeader },
+  components: { AppHeader, ProjectList },
   data() {
     return {
       projects: []
@@ -25,10 +27,7 @@ export default {
 <template>
   <AppHeader />
   <main class="container mt-3">
-    <h1>ciao</h1>
-    <ul>
-      <li v-for="project in projects" :key="project.id">{{ project.name }}</li>
-    </ul>
+    <ProjectList :projects="projects" />
   </main>
 </template>
 
