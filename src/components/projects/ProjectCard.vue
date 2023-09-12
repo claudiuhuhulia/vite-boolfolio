@@ -2,7 +2,8 @@
 export default {
     name: 'ProjectCard',
     props: {
-        project: Object
+        project: Object,
+        isDetail: Boolean
     },
     computed: {
         postDate() {
@@ -32,14 +33,17 @@ export default {
 
 <template>
     <div class="card my-5">
-        <div class="card-header">{{ project.name }}</div>
+        <div class="card-header d-flex justify-content-between">{{ project.name }}
+            <RouterLink class="btn btn-primary" :to="{ name: 'ProjectDetail', params: { id: project.id } }">Vedi
+
+            </RouterLink>
+        </div>
         <div class="card-body clearfix">
             <img v-if="project.image" class="float-start me-2" width="100" :src="project.image" :alt="project.name">
-            <p>{{ abstract }}</p>
+            <p>{{ isDetail ? project.content : abstract }}</p>
         </div>
         <div class="card-footer d-flex justify-content-between align-items-center">
             <div>Pubblicato il: <time>{{ postDate }}</time></div>
-            <div>Tipo: {{ project.type.label }}</div>
         </div>
     </div>
 </template>
