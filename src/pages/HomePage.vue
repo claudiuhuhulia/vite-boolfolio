@@ -1,0 +1,39 @@
+<script>
+import axios from 'axios';
+const endpoint = 'http://127.0.0.1:8000/api/projects/';
+import ProjectList from '../components/projects/ProjectList.vue';
+import AppAlert from '../components/AppAlert.vue';
+export default {
+    name: 'HomePage',
+    components: { ProjectList, AppAlert },
+    data() {
+        return {
+            projects: [],
+            isLoading: false,
+            isAlertOpen: false
+        }
+    },
+    methods: {
+        fetchProjects() {
+            this.isLoading = true;
+            axios.get(endpoint).then(res => { this.projects = res.data })
+                .catch(err => {
+                    console.log(err);
+                    this.isAlertOpen = true
+                })
+                .then(() => { this.isLoading = false })
+        }
+    },
+    created() {
+        this.fetchProjects()
+    }
+}
+</script>
+
+<template>
+    <AppAlert :isOpen="isAlertOpen" @close="isAlertOpen = false" />
+    <AppLoader v-if="isLoading" />
+    <ProjectList v-else :projects="projects" />
+</template>
+
+<script></script>
